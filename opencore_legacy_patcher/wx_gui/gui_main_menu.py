@@ -209,10 +209,10 @@ class MainFrame(wx.Frame):
                 self,
                 f"We found you are currently booting OpenCore built for a different unit: {self.constants.computer.build_model}\n\nWe builds configs to match individual units and cannot be mixed or reused with different Macs.\n\nPlease Build and Install a new OpenCore config, and reboot your Mac.",
                 "Unsupported Configuration Detected!",
-                style=wx.OK | wx.ICON_EXCLAMATION
+                style=wx.OK | wx.CANCEL| wx.ICON_EXCLAMATION
             )
-            pop_up.ShowModal()
-            self.on_build_and_install()
+            if (pop_up.ShowModal() == wx.CANCEL):
+                self.on_build_and_install()
             return
 
         if "--update_installed" in sys.argv and self.constants.has_checked_updates is False and gui_support.CheckProperties(self.constants).host_can_build():
